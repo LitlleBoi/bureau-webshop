@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background-color: #F4EFE3;
+  color: #111111;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+/* Global utility classes used across pages */
+.font-display { font-family: 'Barlow Condensed', sans-serif !important; }
+.font-body { font-family: 'Barlow', sans-serif !important; }
+
+.bg-cream { background-color: #F4EFE3; }
+.bg-card { background-color: #FFFCF5; }
+.bg-brand { background-color: #FAB614; }
+.bg-brand-dark { background-color: #E5A410; }
+.bg-ink { background-color: #111111; }
+.bg-orange { background-color: #FF5C1A; }
+
+.text-ink { color: #111111; }
+.text-brand { color: #FAB614; }
+.text-orange { color: #FF5C1A; }
+.text-muted { color: #888880; }
+.text-cream { color: #F4EFE3; }
+
+.border-ink { border-color: #111111; }
+.border-brand { border-color: #FAB614; }
+
+.hover\:bg-brand:hover { background-color: #FAB614; }
+.hover\:bg-brand-dark:hover { background-color: #E5A410; }
+.hover\:bg-ink:hover { background-color: #111111; }
+.hover\:text-ink:hover { color: #111111; }
+.hover\:text-brand:hover { color: #FAB614; }
+.hover\:text-orange:hover { color: #FF5C1A; }
+.hover\:text-cream:hover { color: #F4EFE3; }
+.hover\:border-ink:hover { border-color: #111111; }
+.hover\:border-brand:hover { border-color: #FAB614; }
+.hover\:opacity-90:hover { opacity: 0.9; }
+.hover\:underline:hover { text-decoration: underline; }
+
+.focus\:border-ink:focus { border-color: #111111; }
+.focus\:border-brand:focus { border-color: #FAB614; }
+
+.group:hover .group-hover\:scale-105 { transform: scale(1.05); }
+.group:hover .group-hover\:scale-110 { transform: scale(1.1); }
+.group:hover .group-hover\:border-ink { border-color: #111111; }
+.group:hover .group-hover\:border-brand { border-color: #FAB614; }
+.group:hover .group-hover\:bg-ink { background-color: #111111; }
+.group:hover .group-hover\:text-cream { color: #F4EFE3; }
+.group:hover .group-hover\:text-brand { color: #FAB614; }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

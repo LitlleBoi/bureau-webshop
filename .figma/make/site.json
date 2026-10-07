@@ -1,0 +1,10 @@
+{
+  "description": "A branded webshop offering exclusive merchandise where employees can redeem products using special codes for seamless, code-based checkout.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
