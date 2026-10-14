@@ -96,13 +96,25 @@ h1, h2, h3, h4, .title-display {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: 104px;
 }
 
 .brand-logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.brand-image {
+  display: block;
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+}
+
+.brand-image-footer {
+  width: 60px;
+  height: 60px;
 }
 
 .brand-badge {
@@ -663,12 +675,16 @@ h1, h2, h3, h4, .title-display {
 
 @media (max-width: 768px) {
   .nav-wrapper {
-    height: 64px;
+    height: 80px;
+  }
+  .brand-image {
+    width: 68px;
+    height: 68px;
   }
   .main-nav {
     display: none;
     position: absolute;
-    top: 64px;
+    top: 80px;
     left: 0;
     right: 0;
     background-color: var(--color-cream);

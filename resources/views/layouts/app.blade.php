@@ -21,8 +21,7 @@
         <div class="container">
             <div class="nav-wrapper">
                 <a href="{{ route('home') }}" class="brand-logo">
-                    <span class="brand-badge">HB</span>
-                    <span class="brand-title">Het BUREAU</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="HET BUREAU" class="brand-image">
                 </a>
 
                 <nav class="main-nav" id="mainNav">
@@ -115,8 +114,7 @@
             <div class="footer-grid">
                 <div>
                     <div class="brand-logo" style="margin-bottom: 1rem;">
-                        <span class="brand-badge">HB</span>
-                        <span class="brand-title" style="color: #fff;">Het BUREAU</span>
+                        <img src="{{ asset('images/logo.png') }}" alt="HET BUREAU" class="brand-image brand-image-footer">
                     </div>
                     <p style="color: rgba(255, 255, 255, 0.7); max-width: 420px; font-size: 0.95rem;">
                         De officiële webshop van Het BUREAU. Exclusieve merchandise en kleding speciaal ontworpen voor onze medewerkers. Claim jouw product met je persoonlijke code.

@@ -18,7 +18,7 @@
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <a href="{{ route('admin.dashboard') }}" class="brand-logo">
                         <span class="brand-badge" style="background-color: var(--color-orange); color: #fff;">ADMIN</span>
-                        <span class="brand-title" style="color: #fff;">Het BUREAU</span>
+                        <img src="{{ asset('images/logo.png') }}" alt="HET BUREAU" class="brand-image">
                     </a>
                 </div>
 
