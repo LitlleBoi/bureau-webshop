@@ -25,13 +25,13 @@
             <div>
                 <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--color-ink);">Geselecteerd Item</h2>
                 <div class="cart-item-card">
-                    <img src="{{ $product->image }}" alt="{{ $product->name_nl }}" style="width: 140px; height: 140px; object-fit: cover; border: 2px solid var(--color-border); flex-shrink: 0;">
+                    <img src="{{ $product->image }}" alt="{{ $product->name_nl }}" style="width: 140px; height: 140px; object-fit: cover; border: 1px solid var(--color-border); flex-shrink: 0;">
                     
                     <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
                             <span class="product-card-category">{{ $product->category }}</span>
                             <h3 style="font-size: 1.75rem; margin-bottom: 0.25rem;">{{ $product->name_nl }}</h3>
-                            <p style="font-family: var(--font-display); font-weight: 700; color: #555; text-transform: uppercase; font-size: 0.95rem;">
+                            <p style="font-family: var(--font-body); font-weight: 700; color: #555; text-transform: uppercase; font-size: 0.95rem;">
                                 Kleur: <strong>{{ $cart['color'] }}</strong>
                                 @if(!empty($cart['size']))
                                     · Maat: <strong>{{ $cart['size'] }}</strong>
@@ -55,9 +55,9 @@
                 </div>
 
                 <!-- Bestel Totalen Box -->
-                <div style="margin-top: 1.5rem; background-color: var(--color-ink); color: var(--color-cream); padding: 1.5rem; border: 2px solid var(--color-border);">
+                <div style="margin-top: 1.5rem; background-color: var(--color-ink); color: var(--color-cream); padding: 1.5rem; border: 1px solid var(--color-border);">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <span style="font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 0.1em;">Totaalbedrag</span>
+                        <span style="font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 0.1em;">Totaalbedrag</span>
                         <span style="font-family: var(--font-display); font-weight: 900; font-size: 1.75rem; color: var(--color-brand);">€0,00</span>
                     </div>
                     <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7); font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.05em;">

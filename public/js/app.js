@@ -1,12 +1,16 @@
 // Het BUREAU Webshop - JavaScript Interactiviteit
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile Nav Toggle
+  // Oranje menu-blok: op mobiel klapt het de navigatie uit, op desktop gaat het naar de collectie
   const mobileToggle = document.getElementById('mobileToggle');
   const mainNav = document.getElementById('mainNav');
 
   if (mobileToggle && mainNav) {
     mobileToggle.addEventListener('click', () => {
+      if (window.innerWidth > 992 && mobileToggle.dataset.href) {
+        window.location.href = mobileToggle.dataset.href;
+        return;
+      }
       mainNav.classList.toggle('active');
     });
   }

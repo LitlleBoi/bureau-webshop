@@ -34,7 +34,7 @@
                             <div>
                                 <strong style="font-size: 1.1rem; display: block;">{{ $p->name_nl }}</strong>
                                 @if($p->tag)
-                                    <span style="font-family: var(--font-display); font-weight: 700; font-size: 0.75rem; color: var(--color-orange); text-transform: uppercase;">
+                                    <span style="font-family: var(--font-body); font-weight: 700; font-size: 0.75rem; color: var(--color-orange); text-transform: uppercase;">
                                         {{ $p->tag }}
                                     </span>
                                 @endif
@@ -42,7 +42,7 @@
                         </div>
                     </td>
                     <td>
-                        <span style="font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; color: var(--color-muted);">
+                        <span style="font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; color: var(--color-muted);">
                             {{ $p->category }}
                         </span>
                     </td>

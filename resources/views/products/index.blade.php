@@ -14,7 +14,7 @@
     </div>
 
     <!-- Filter & Search Toolbar -->
-    <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 1.5rem; margin-bottom: 3rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; box-shadow: 4px 4px 0 var(--color-border);">
+    <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 1.5rem; margin-bottom: 3rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; box-shadow: var(--shadow-card);">
         <!-- Category Buttons -->
         <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
             <a href="{{ route('products.index', array_merge(request()->query(), ['category' => 'Alle'])) }}" 

@@ -12,7 +12,7 @@
         </p>
 
         <!-- Test Account Hint Box -->
-        <div style="background-color: var(--color-brand); border: 2px solid var(--color-border); padding: 1.25rem; margin-bottom: 2rem; box-shadow: 4px 4px 0 var(--color-border);">
+        <div style="background-color: var(--color-brand); border: 1px solid var(--color-border); padding: 1.25rem; margin-bottom: 2rem; box-shadow: var(--shadow-card);">
             <p style="font-family: var(--font-display); font-weight: 900; font-size: 0.95rem; text-transform: uppercase; margin-bottom: 0.35rem;">
                 🔑 Snelle test accounts:
             </p>
@@ -22,7 +22,7 @@
             </p>
         </div>
 
-        <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 2rem; box-shadow: 6px 6px 0 var(--color-border);">
+        <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; box-shadow: var(--shadow-card);">
             <form action="{{ route('login.post') }}" method="POST">
                 @csrf
 

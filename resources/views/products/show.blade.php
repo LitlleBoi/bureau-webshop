@@ -5,7 +5,7 @@
 @section('content')
 <div class="container" style="padding-top: 2rem; padding-bottom: 5rem;">
     <!-- Breadcrumb -->
-    <div style="font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 2rem; letter-spacing: 0.05em;">
+    <div style="font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 2rem; letter-spacing: 0.05em;">
         <a href="{{ route('home') }}" style="color: var(--color-muted);">Home</a> /
         <a href="{{ route('products.index') }}" style="color: var(--color-muted);">Collectie</a> /
         <a href="{{ route('products.index', ['category' => $product->category]) }}" style="color: var(--color-muted);">{{ $product->category }}</a> /
@@ -29,7 +29,7 @@
         <!-- Info & Order Form -->
         <div class="detail-info">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                <span style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; color: var(--color-muted); letter-spacing: 0.15em;">
+                <span style="font-family: var(--font-body); font-weight: 700; font-size: 1rem; text-transform: uppercase; color: var(--color-muted); letter-spacing: 0.15em;">
                     {{ $product->category }}
                 </span>
                 <span class="badge-status {{ $product->available ? 'badge-available' : 'badge-soldout' }}">
@@ -45,7 +45,7 @@
                 <span style="font-family: var(--font-display); font-weight: 900; font-size: 2.25rem; color: var(--color-orange);">
                     €0,00
                 </span>
-                <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--color-muted); text-transform: uppercase;">
+                <span style="font-family: var(--font-body); font-weight: 700; font-size: 1.1rem; color: var(--color-muted); text-transform: uppercase;">
                     (Gratis met medewerkerscode)
                 </span>
             </div>
@@ -72,7 +72,7 @@
                                     <button type="button" 
                                             class="option-chip-color {{ $index === 0 ? 'selected' : '' }}" 
                                             data-value="{{ $color }}"
-                                            style="padding: 0.6rem 1.25rem; border: 2px solid var(--color-border); background-color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 1rem; cursor: pointer; text-transform: uppercase;">
+                                            style="padding: 0.6rem 1.25rem; border: 1px solid var(--color-border); background-color: #fff; font-family: var(--font-body); font-weight: 700; font-size: 1rem; cursor: pointer; text-transform: uppercase;">
                                         {{ $color }}
                                     </button>
                                 @endforeach
@@ -89,7 +89,7 @@
                                     <button type="button" 
                                             class="option-chip-size {{ $index === 0 ? 'selected' : '' }}" 
                                             data-value="{{ $size }}"
-                                            style="padding: 0.6rem 1.25rem; border: 2px solid var(--color-border); background-color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 1rem; cursor: pointer; text-transform: uppercase;">
+                                            style="padding: 0.6rem 1.25rem; border: 1px solid var(--color-border); background-color: #fff; font-family: var(--font-body); font-weight: 700; font-size: 1rem; cursor: pointer; text-transform: uppercase;">
                                         {{ $size }}
                                     </button>
                                 @endforeach
@@ -115,7 +115,7 @@
             @endif
 
             <!-- Info Box -->
-            <div style="margin-top: 2.5rem; background-color: var(--color-card); border: 2px solid var(--color-border); padding: 1.5rem; box-shadow: 4px 4px 0 var(--color-border);">
+            <div style="margin-top: 2.5rem; background-color: var(--color-card); border: 1px solid var(--color-border); padding: 1.5rem; box-shadow: var(--shadow-card);">
                 <h4 style="font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
                     <span>⚡</span> <span>VOUCHERREGELING</span>
                 </h4>
@@ -128,7 +128,7 @@
 
     <!-- Related Products -->
     @if($relatedProducts->isNotEmpty())
-        <div style="margin-top: 5rem; padding-top: 3rem; border-top: 2px solid var(--color-border);">
+        <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--color-border);">
             <div class="section-header">
                 <div>
                     <p class="section-label">Meer in {{ $product->category }}</p>

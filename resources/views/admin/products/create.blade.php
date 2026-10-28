@@ -5,13 +5,13 @@
 @section('content')
 <div style="max-width: 800px; margin: 0 auto;">
     <div style="margin-bottom: 2rem;">
-        <a href="{{ route('admin.products.index') }}" style="font-family: var(--font-display); font-weight: 700; color: var(--color-muted); text-transform: uppercase;">
+        <a href="{{ route('admin.products.index') }}" style="font-family: var(--font-body); font-weight: 700; color: var(--color-muted); text-transform: uppercase;">
             ← Terug naar Producten
         </a>
         <h1 style="font-size: clamp(2rem, 4vw, 3rem); margin-top: 0.5rem;">NIEUW PRODUCT TOEVOEGEN</h1>
     </div>
 
-    <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 2.5rem; box-shadow: 6px 6px 0 var(--color-border);">
+    <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2.5rem; box-shadow: var(--shadow-card);">
         <form action="{{ route('admin.products.store') }}" method="POST">
             @csrf
 
@@ -61,7 +61,7 @@
             </div>
 
             <div class="form-group" style="margin-top: 1rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-family: var(--font-display); font-weight: 700; text-transform: uppercase;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-family: var(--font-body); font-weight: 700; text-transform: uppercase;">
                     <input type="checkbox" name="available" value="1" checked style="width: 20px; height: 20px; accent-color: var(--color-brand);">
                     <span>Direct beschikbaar voor claimen</span>
                 </label>

@@ -9,16 +9,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
-<body style="background-color: #f7f5ed;">
+<body>
 
     <!-- Admin Header -->
-    <header class="site-header" style="background-color: var(--color-ink); border-bottom: 2px solid #000;">
+    <header class="site-header admin-header">
         <div class="container">
             <div class="nav-wrapper">
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <a href="{{ route('admin.dashboard') }}" class="brand-logo">
-                        <span class="brand-badge" style="background-color: var(--color-orange); color: #fff;">ADMIN</span>
-                        <span class="brand-title" style="color: #fff;">Het BUREAU</span>
+                        <img src="{{ asset('images/logo.png') }}" alt="Het BUREAU" style="width: 52px; height: 52px;">
+                        <span class="brand-title" style="color: #fff;">Beheer</span>
                     </a>
                 </div>
 
@@ -29,7 +29,7 @@
                 </nav>
 
                 <div class="nav-actions">
-                    <a href="{{ route('home') }}" class="btn btn-outline btn-sm" style="color: #fff; border-color: rgba(255,255,255,0.4);">
+                    <a href="{{ route('home') }}" class="btn btn-outline btn-sm">
                         ← Naar Webshop
                     </a>
                     <form action="{{ route('logout') }}" method="POST" style="display:inline;">

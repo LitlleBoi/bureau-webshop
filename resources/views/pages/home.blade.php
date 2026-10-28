@@ -3,53 +3,91 @@
 @section('title', 'Home — Officiële Merchandise')
 
 @section('content')
+@php
+    $heroProducts = $featuredProducts->values();
+@endphp
+
 <!-- Hero Section -->
 <section class="hero">
     <div class="container">
-        <span class="hero-tag">Exclusief Personeelsprogramma</span>
-        <h1 class="hero-title">
-            MERCHANDISE VOOR<br>
-            <span style="color: var(--color-brand); background-color: var(--color-ink); padding: 0 0.4rem;">HET BUREAU</span>
-        </h1>
-        <p class="hero-subtitle">
-            Als gewaardeerd onderdeel van ons team mag je één exclusief item uit onze officiële collectie gratis uitkiezen. Voer je persoonlijke voucher-code in bij het afrekenen.
-        </p>
-        <div class="hero-actions">
-            <a href="{{ route('products.index') }}" class="btn btn-brand">Bekijk de collectie →</a>
-            @auth
-                <a href="{{ route('account') }}" class="btn btn-dark">Mijn Account</a>
-            @else
-                <a href="{{ route('login') }}" class="btn btn-dark">Inloggen met je account</a>
-            @endauth
+        <div class="hero-grid">
+            <div>
+                <span class="hero-tag">Exclusief personeelsprogramma</span>
+                <h1 class="hero-title">
+                    Claim jouw<br>
+                    BUREAU<br>
+                    style.
+                </h1>
+                <p class="hero-subtitle">
+                    Kies één exclusief item uit onze officiële collectie — helemaal gratis met je persoonlijke code.
+                </p>
+                <div class="hero-actions">
+                    <a href="{{ route('products.index') }}" class="btn-cta">
+                        <span class="btn-cta-label">Start shopping</span>
+                        <span class="btn-cta-arrow" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+                        </span>
+                    </a>
+                    @auth
+                        <a href="{{ route('account') }}" class="hero-link">Mijn account</a>
+                    @else
+                        <a href="{{ route('login') }}" class="hero-link">Inloggen</a>
+                    @endauth
+                </div>
+            </div>
+
+            <div class="hero-collage" aria-hidden="true">
+                <span class="hero-circle" style="width: 320px; height: 320px; right: -60px; top: -90px;"></span>
+                <span class="hero-circle" style="width: 220px; height: 220px; left: 18%; bottom: -70px;"></span>
+
+                @if($heroProducts->get(0))
+                    <div class="hero-tile hero-tile-a"><img src="{{ $heroProducts[0]->image }}" alt=""></div>
+                @endif
+                @if($heroProducts->get(1))
+                    <div class="hero-tile hero-tile-b"><img src="{{ $heroProducts[1]->image }}" alt=""></div>
+                    <span class="hero-dot" style="right: 26%; top: 38%;"></span>
+                @endif
+                @if($heroProducts->get(2))
+                    <div class="hero-tile hero-tile-c"><img src="{{ $heroProducts[2]->image }}" alt=""></div>
+                    <span class="hero-dot" style="left: 32%; bottom: 28%;"></span>
+                @endif
+
+                <div class="hero-script">
+                    Collectie
+                    <svg width="64" height="30" viewBox="0 0 64 30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M2 24c14 6 36 6 52-14"/><path d="M46 8l9 1-2 9"/>
+                    </svg>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- 3 USPs -->
-<section style="background-color: var(--color-ink); color: var(--color-cream); padding: 2.5rem 0; border-bottom: 2px solid var(--color-border);">
+<section class="usp-strip">
     <div class="container">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
-            <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                <div style="background-color: var(--color-brand); color: #000; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-family: var(--font-display); font-size: 1.25rem; flex-shrink: 0; border: 2px solid #fff;">1</div>
+        <div class="usp-grid">
+            <div class="usp-item">
+                <div class="usp-icon">1</div>
                 <div>
-                    <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.25rem;">100% GRATIS MET CODE</h3>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">Geen verborgen kosten of betalingen. Eén vouchercode per medewerker.</p>
+                    <h3>100% gratis met code</h3>
+                    <p>Geen verborgen kosten of betalingen. Eén vouchercode per medewerker.</p>
                 </div>
             </div>
 
-            <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                <div style="background-color: var(--color-brand); color: #000; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-family: var(--font-display); font-size: 1.25rem; flex-shrink: 0; border: 2px solid #fff;">2</div>
+            <div class="usp-item">
+                <div class="usp-icon" style="background-color: var(--color-orange); color: #fff;">2</div>
                 <div>
-                    <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.25rem;">PREMIUM KWALITEIT</h3>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">Duurzaam geproduceerde kleding, mokken, drinkflessen en gadgets.</p>
+                    <h3>Premium kwaliteit</h3>
+                    <p>Duurzaam geproduceerde kleding, mokken, drinkflessen en gadgets.</p>
                 </div>
             </div>
 
-            <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                <div style="background-color: var(--color-brand); color: #000; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-family: var(--font-display); font-size: 1.25rem; flex-shrink: 0; border: 2px solid #fff;">3</div>
+            <div class="usp-item">
+                <div class="usp-icon" style="background-color: var(--color-ink); color: #fff;">3</div>
                 <div>
-                    <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.25rem;">EENVOUDIG INWISSELEN</h3>
-                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">Kies je favoriet, voeg toe aan je tas en vul je HB-code in om direct te claimen.</p>
+                    <h3>Eenvoudig inwisselen</h3>
+                    <p>Kies je favoriet, voeg toe aan je tas en vul je HB-code in om direct te claimen.</p>
                 </div>
             </div>
         </div>
@@ -57,14 +95,14 @@
 </section>
 
 <!-- Featured Products -->
-<section style="padding: 4.5rem 0;">
+<section style="padding: 5rem 0 2rem;">
     <div class="container">
         <div class="section-header">
             <div>
-                <p class="section-label">Populaire Items</p>
-                <h2 class="section-title">Uitgelichte Collectie</h2>
+                <p class="section-label">Populaire items</p>
+                <h2 class="section-title">Uitgelichte collectie</h2>
             </div>
-            <a href="{{ route('products.index') }}" class="btn btn-outline btn-sm">Bekijk alles (15) →</a>
+            <a href="{{ route('products.index') }}" class="btn btn-outline btn-sm">Bekijk alles →</a>
         </div>
 
         <div class="product-grid">
@@ -83,7 +121,7 @@
                         </h3>
                         <p class="product-card-desc">{{ $p->description }}</p>
                         <div class="product-card-footer">
-                            <span class="product-price-free">GRATIS MET CODE</span>
+                            <span class="product-price-free">Gratis met code</span>
                             <a href="{{ route('products.show', $p->id) }}" class="btn btn-dark btn-sm">Bekijk →</a>
                         </div>
                     </div>
@@ -94,33 +132,33 @@
 </section>
 
 <!-- Process Banner: Hoe werkt het? -->
-<section style="background-color: var(--color-card); border-top: 2px solid var(--color-border); border-bottom: 2px solid var(--color-border); padding: 4.5rem 0;">
+<section style="padding: 3rem 0 6rem;">
     <div class="container">
         <div style="text-align: center; max-width: 650px; margin: 0 auto 3.5rem;">
             <p class="section-label">Eenvoudig stappenplan</p>
             <h2 class="section-title">Hoe werkt het claimen?</h2>
-            <p style="color: var(--color-muted); font-size: 1.1rem; margin-top: 0.5rem;">
+            <p style="color: var(--color-muted); font-size: 1.1rem; margin-top: 0.75rem;">
                 Volg deze 3 eenvoudige stappen om jouw gratis merchandise te ontvangen.
             </p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-            <div style="border: 2px solid var(--color-border); padding: 2rem; background-color: #fff; box-shadow: 4px 4px 0 var(--color-border);">
-                <span style="font-family: var(--font-display); font-weight: 900; font-size: 3rem; color: var(--color-brand); line-height: 1; display: block; margin-bottom: 0.5rem;">01</span>
-                <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Account Aanmaken</h3>
-                <p style="color: #555; font-size: 0.95rem;">Log in of meld je aan met je zakelijke werk-e-mailadres om toegang te krijgen tot de catalogus.</p>
+        <div class="steps-grid">
+            <div class="step-card">
+                <span class="step-num" style="background-color: var(--color-brand);">01</span>
+                <h3>Account aanmaken</h3>
+                <p>Log in of meld je aan met je zakelijke werk-e-mailadres om toegang te krijgen tot de catalogus.</p>
             </div>
 
-            <div style="border: 2px solid var(--color-border); padding: 2rem; background-color: #fff; box-shadow: 4px 4px 0 var(--color-border);">
-                <span style="font-family: var(--font-display); font-weight: 900; font-size: 3rem; color: var(--color-orange); line-height: 1; display: block; margin-bottom: 0.5rem;">02</span>
-                <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Product Kiezen</h3>
-                <p style="color: #555; font-size: 0.95rem;">Bekijk de merchandise, selecteer je gewenste kleur en maat, en plaats het item in je winkelmand.</p>
+            <div class="step-card">
+                <span class="step-num" style="background-color: var(--color-orange); color: #fff;">02</span>
+                <h3>Product kiezen</h3>
+                <p>Bekijk de merchandise, selecteer je gewenste kleur en maat, en plaats het item in je winkelmand.</p>
             </div>
 
-            <div style="border: 2px solid var(--color-border); padding: 2rem; background-color: #fff; box-shadow: 4px 4px 0 var(--color-border);">
-                <span style="font-family: var(--font-display); font-weight: 900; font-size: 3rem; color: var(--color-ink); line-height: 1; display: block; margin-bottom: 0.5rem;">03</span>
-                <h3 style="font-size: 1.5rem; margin-bottom: 0.75rem;">Code Inwisselen</h3>
-                <p style="color: #555; font-size: 0.95rem;">Vul in de winkelwagen jouw unieke HB-code in. Na validatie is je bestelling direct kosteloos geplaatst!</p>
+            <div class="step-card">
+                <span class="step-num" style="background-color: var(--color-ink); color: #fff;">03</span>
+                <h3>Code inwisselen</h3>
+                <p>Vul in de winkelwagen jouw unieke HB-code in. Na validatie is je bestelling direct kosteloos geplaatst!</p>
             </div>
         </div>
     </div>

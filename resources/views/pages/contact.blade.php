@@ -11,7 +11,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;" class="cart-grid">
             <!-- Contact Informatie -->
             <div>
-                <div style="background-color: var(--color-ink); color: var(--color-cream); border: 2px solid var(--color-border); padding: 2rem; margin-bottom: 1.5rem;">
+                <div style="background-color: var(--color-ink); color: var(--color-cream); border: 1px solid var(--color-border); padding: 2rem; margin-bottom: 1.5rem;">
                     <h3 style="color: var(--color-brand); font-size: 1.5rem; margin-bottom: 1rem;">HET BUREAU HOOFDKANTOOR</h3>
                     <p style="font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.8);">
                         📍 Keizersgracht 200<br>
@@ -24,7 +24,7 @@
                     </p>
                 </div>
 
-                <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 1.5rem; box-shadow: 4px 4px 0 var(--color-border);">
+                <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 1.5rem; box-shadow: var(--shadow-card);">
                     <h4 style="font-size: 1.15rem; margin-bottom: 0.5rem;">VOUCHERCODE KWIJT?</h4>
                     <p style="font-size: 0.9rem; color: #555; line-height: 1.5;">
                         Geen probleem! Stuur een mailtje naar de HR-afdeling met vermelding van je personeelsnummer, dan sturen we je direct een nieuwe code toe.
@@ -33,7 +33,7 @@
             </div>
 
             <!-- Contact Formulier -->
-            <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 2rem; box-shadow: 6px 6px 0 var(--color-border);">
+            <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; box-shadow: var(--shadow-card);">
                 <h2 style="font-size: 1.5rem; margin-bottom: 1.25rem;">Stuur ons een bericht</h2>
 
                 <form action="{{ route('contact.send') }}" method="POST">

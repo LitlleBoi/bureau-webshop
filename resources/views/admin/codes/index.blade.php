@@ -29,7 +29,7 @@
 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2.5rem; margin-top: 2rem;" class="cart-grid">
     <!-- Linker Kolom: Nieuwe Code Aanmaken -->
     <div>
-        <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 2rem; box-shadow: 6px 6px 0 var(--color-border);">
+        <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; box-shadow: var(--shadow-card);">
             <h2 style="font-size: 1.5rem; margin-bottom: 1rem;">Nieuwe Code Genereren</h2>
             
             <form action="{{ route('admin.codes.store') }}" method="POST">

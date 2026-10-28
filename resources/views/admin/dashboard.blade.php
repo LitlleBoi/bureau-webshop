@@ -21,7 +21,7 @@
     <div class="stat-card" style="background-color: var(--color-brand);">
         <p class="stat-val" style="color: #000;">{{ $productsCount }}</p>
         <p class="stat-label" style="color: #000;">Producten</p>
-        <p style="font-size: 0.85rem; font-family: var(--font-display); font-weight: 700; color: rgba(0,0,0,0.7); text-transform: uppercase;">
+        <p style="font-size: 0.85rem; font-family: var(--font-body); font-weight: 700; color: rgba(0,0,0,0.7); text-transform: uppercase;">
             {{ $availableProductsCount }} beschikbaar
         </p>
     </div>
@@ -29,7 +29,7 @@
     <div class="stat-card" style="background-color: var(--color-ink); color: var(--color-cream);">
         <p class="stat-val" style="color: var(--color-brand);">{{ $codesCount }}</p>
         <p class="stat-label">Vouchercodes</p>
-        <p style="font-size: 0.85rem; font-family: var(--font-display); font-weight: 700; color: rgba(255,255,255,0.7); text-transform: uppercase;">
+        <p style="font-size: 0.85rem; font-family: var(--font-body); font-weight: 700; color: rgba(255,255,255,0.7); text-transform: uppercase;">
             {{ $usedCodesCount }} reeds gebruikt
         </p>
     </div>
@@ -37,7 +37,7 @@
     <div class="stat-card" style="background-color: var(--color-orange); color: #fff;">
         <p class="stat-val">{{ $claimsCount }}</p>
         <p class="stat-label">Claims Geplaatst</p>
-        <p style="font-size: 0.85rem; font-family: var(--font-display); font-weight: 700; color: rgba(255,255,255,0.8); text-transform: uppercase;">
+        <p style="font-size: 0.85rem; font-family: var(--font-body); font-weight: 700; color: rgba(255,255,255,0.8); text-transform: uppercase;">
             Door personeel
         </p>
     </div>
@@ -45,7 +45,7 @@
     <div class="stat-card" style="background-color: var(--color-card);">
         <p class="stat-val">{{ $usersCount }}</p>
         <p class="stat-label">Gebruikers</p>
-        <p style="font-size: 0.85rem; font-family: var(--font-display); font-weight: 700; color: var(--color-muted); text-transform: uppercase;">
+        <p style="font-size: 0.85rem; font-family: var(--font-body); font-weight: 700; color: var(--color-muted); text-transform: uppercase;">
             Medewerkers & Admins
         </p>
     </div>
@@ -57,14 +57,14 @@
     <div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <h2 style="font-size: 1.5rem;">Recente Claims & Bestellingen</h2>
-            <span style="font-size: 0.85rem; font-family: var(--font-display); font-weight: 700; color: var(--color-muted); text-transform: uppercase;">
+            <span style="font-size: 0.85rem; font-family: var(--font-body); font-weight: 700; color: var(--color-muted); text-transform: uppercase;">
                 Totaal: {{ $claimsCount }}
             </span>
         </div>
 
         <div class="data-table-wrap">
             @if($recentClaims->isEmpty())
-                <p style="padding: 2.5rem; text-align: center; color: var(--color-muted); font-family: var(--font-display); font-weight: 700; text-transform: uppercase;">
+                <p style="padding: 2.5rem; text-align: center; color: var(--color-muted); font-family: var(--font-body); font-weight: 700; text-transform: uppercase;">
                     Nog geen claims geregistreerd.
                 </p>
             @else
@@ -114,12 +114,12 @@
     <div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <h2 style="font-size: 1.5rem;">Recente Codes</h2>
-            <a href="{{ route('admin.codes.index') }}" style="font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; color: var(--color-orange); text-transform: uppercase;">
+            <a href="{{ route('admin.codes.index') }}" style="font-family: var(--font-body); font-weight: 700; font-size: 0.85rem; color: var(--color-orange); text-transform: uppercase;">
                 Alle codes →
             </a>
         </div>
 
-        <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 1.25rem; box-shadow: 4px 4px 0 var(--color-border);">
+        <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 1.25rem; box-shadow: var(--shadow-card);">
             @foreach($recentCodes as $code)
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--color-border-light);">
                     <div>

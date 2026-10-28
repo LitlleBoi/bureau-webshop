@@ -25,7 +25,7 @@
         <!-- Linker kolom: Profiel & Claims Historie -->
         <div>
             <!-- Persoonlijke Gegevens Formulier -->
-            <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 2rem; box-shadow: 6px 6px 0 var(--color-border); margin-bottom: 3rem;">
+            <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; box-shadow: var(--shadow-card); margin-bottom: 3rem;">
                 <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Bezorg- & Contactgegevens</h2>
                 
                 <form action="{{ route('account.update') }}" method="POST">
@@ -60,12 +60,12 @@
             </div>
 
             <!-- Geclaimde Items Historie -->
-            <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 2rem; box-shadow: 6px 6px 0 var(--color-border);">
+            <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; box-shadow: var(--shadow-card);">
                 <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Mijn Geclaimde Items</h2>
 
                 @if($claims->isEmpty())
                     <div style="text-align: center; padding: 3rem 1rem; border: 2px dashed var(--color-border-light);">
-                        <p style="font-family: var(--font-display); font-weight: 700; text-transform: uppercase; font-size: 1.25rem; color: var(--color-muted); margin-bottom: 0.5rem;">
+                        <p style="font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 1.25rem; color: var(--color-muted); margin-bottom: 0.5rem;">
                             Je hebt nog geen item geclaimd
                         </p>
                         <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem;">
@@ -76,9 +76,9 @@
                 @else
                     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                         @foreach($claims as $c)
-                            <div style="border: 2px solid var(--color-border); background-color: #fff; padding: 1.25rem; display: flex; gap: 1.5rem; align-items: center; box-shadow: 3px 3px 0 var(--color-border);">
+                            <div style="border: 1px solid var(--color-border); background-color: #fff; padding: 1.25rem; display: flex; gap: 1.5rem; align-items: center; box-shadow: var(--shadow-card);">
                                 @if($c->product)
-                                    <img src="{{ $c->product->image }}" alt="{{ $c->product_name }}" style="width: 80px; height: 80px; object-fit: cover; border: 2px solid var(--color-border); flex-shrink: 0;">
+                                    <img src="{{ $c->product->image }}" alt="{{ $c->product_name }}" style="width: 80px; height: 80px; object-fit: cover; border: 1px solid var(--color-border); flex-shrink: 0;">
                                 @endif
                                 <div style="flex: 1;">
                                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
@@ -87,7 +87,7 @@
                                             {{ $c->status === 'delivered' ? 'Afgeleverd' : ($c->status === 'shipped' ? 'Verzonden' : 'Geclaimd') }}
                                         </span>
                                     </div>
-                                    <p style="font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; color: #555; text-transform: uppercase;">
+                                    <p style="font-family: var(--font-body); font-weight: 700; font-size: 0.9rem; color: #555; text-transform: uppercase;">
                                         Kleur: {{ $c->color }} @if($c->size) · Maat: {{ $c->size }} @endif
                                     </p>
                                     <p style="font-size: 0.85rem; color: var(--color-muted); margin-top: 0.25rem;">
@@ -104,21 +104,21 @@
         <!-- Rechter kolom: Status Vouchercode & Uitloggen -->
         <div>
             <!-- Code Status Box -->
-            <div style="background-color: var(--color-card); border: 2px solid var(--color-border); padding: 2rem; box-shadow: 6px 6px 0 var(--color-border); margin-bottom: 2rem;">
+            <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; box-shadow: var(--shadow-card); margin-bottom: 2rem;">
                 <h3 style="font-size: 1.35rem; margin-bottom: 1rem; color: var(--color-ink);">Persoonlijke Code</h3>
 
                 @if($code)
-                    <div style="background-color: var(--color-ink); color: var(--color-brand); font-family: var(--font-display); font-weight: 900; font-size: 2.25rem; text-align: center; padding: 1rem; letter-spacing: 0.2em; border: 2px solid var(--color-border); margin-bottom: 1rem;">
+                    <div style="background-color: var(--color-ink); color: var(--color-brand); font-family: var(--font-display); font-weight: 900; font-size: 1.6rem; text-align: center; padding: 1rem; letter-spacing: 0.08em; margin-bottom: 1rem;">
                         {{ $code->code }}
                     </div>
 
                     @if($code->used)
-                        <div style="display: flex; align-items: center; gap: 0.5rem; color: #dc2626; font-family: var(--font-display); font-weight: 700; text-transform: uppercase;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; color: #dc2626; font-family: var(--font-body); font-weight: 700; text-transform: uppercase;">
                             <span style="width: 10px; height: 10px; background-color: #dc2626; border-radius: 9999px;"></span>
                             <span>Gebruikt op {{ $code->used_at ? $code->used_at->format('d-m-Y') : 'onlangs' }}</span>
                         </div>
                     @else
-                        <div style="display: flex; align-items: center; gap: 0.5rem; color: #15803d; font-family: var(--font-display); font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; color: #15803d; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;">
                             <span style="width: 10px; height: 10px; background-color: #15803d; border-radius: 9999px;"></span>
                             <span>Beschikbaar om in te wisselen</span>
                         </div>
@@ -126,7 +126,7 @@
                     @endif
                 @elseif($user->code_used)
                     <div style="padding: 1rem; background-color: #fee2e2; border: 1px solid #f87171; text-align: center;">
-                        <p style="font-family: var(--font-display); font-weight: 700; text-transform: uppercase; color: #991b1b;">
+                        <p style="font-family: var(--font-body); font-weight: 700; text-transform: uppercase; color: #991b1b;">
                             Je hebt jouw code al gebruikt
                         </p>
                     </div>
