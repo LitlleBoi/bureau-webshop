@@ -14,13 +14,13 @@
                 <div style="background-color: var(--color-ink); color: var(--color-cream); border: 1px solid var(--color-border); padding: 2rem; margin-bottom: 1.5rem;">
                     <h3 style="color: var(--color-brand); font-size: 1.5rem; margin-bottom: 1rem;">HET BUREAU HOOFDKANTOOR</h3>
                     <p style="font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.8);">
-                        📍 Keizersgracht 200<br>
-                        1016 AA Amsterdam<br>
+                        📍 Koningin Wilhelminalaan 7<br>
+                        3526 XC Utrecht<br>
                         Nederland
                     </p>
                     <p style="font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.8); margin-top: 1rem;">
                         ✉ hr@hetbureau.nl<br>
-                        ☎ 020 - 123 4567
+                        ☎ +31 (0)30 280 7070
                     </p>
                 </div>
 
