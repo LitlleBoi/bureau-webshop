@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class PageController extends Controller
 {
@@ -18,33 +20,40 @@ class PageController extends Controller
 
     public function sendContact(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'subject' => 'nullable|string|max:255',
-            'message' => 'required|string',
+            'message' => 'required|string|max:10000',
         ]);
 
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $subject = $request->input('subject', 'Vraag via contactformulier');
-        $userMsg = $request->input('message');
+        if (in_array(config('mail.default'), ['log', 'array'], true)) {
+            return back()
+                ->withInput()
+                ->with('error', 'E-mail verzenden is nog niet ingesteld. Configureer eerst een SMTP-mailserver.');
+        }
 
-        $fullSubject = "[Het BUREAU] {$subject} - {$name}";
-        $body = "Beste HR-afdeling van Het BUREAU,\n\n{$userMsg}\n\n---\nVerzonden via het contactformulier van Het BUREAU Webshop\nNaam: {$name}\nE-mailadres: {$email}";
+        $subject = $validated['subject'] ?: 'Bericht via het contactformulier';
+        $body = "Nieuw bericht via het contactformulier\n\n"
+            ."Naam: {$validated['name']}\n"
+            ."E-mailadres: {$validated['email']}\n"
+            ."Onderwerp: {$subject}\n\n"
+            ."Bericht:\n{$validated['message']}";
 
-        $mailtoUrl = 'mailto:hr@hetbureau.nl?subject=' . rawurlencode($fullSubject) . '&body=' . rawurlencode($body);
-        $outlookWebUrl = 'https://outlook.office.com/mail/deeplink/compose?to=hr@hetbureau.nl&subject=' . rawurlencode($fullSubject) . '&body=' . rawurlencode($body);
-        $outlookLiveUrl = 'https://outlook.live.com/mail/0/deeplink/compose?to=hr@hetbureau.nl&subject=' . rawurlencode($fullSubject) . '&body=' . rawurlencode($body);
+        try {
+            Mail::raw($body, function ($mail) use ($validated, $subject) {
+                $mail->to('hr@hetbureau.nl')
+                    ->replyTo($validated['email'], $validated['name'])
+                    ->subject($subject);
+            });
+        } catch (TransportExceptionInterface $exception) {
+            report($exception);
 
-        return back()->with([
-            'success' => 'Je bericht is klaargezet! We openen Outlook voor je.',
-            'mailto' => $mailtoUrl,
-            'outlookWeb' => $outlookWebUrl,
-            'outlookLive' => $outlookLiveUrl,
-            'recipient' => 'hr@hetbureau.nl',
-            'emailSubject' => $fullSubject,
-            'emailBody' => $body,
-        ]);
+            return back()
+                ->withInput()
+                ->with('error', 'Je bericht kon niet worden verzonden. Probeer het later opnieuw.');
+        }
+
+        return back()->with('success', 'Bedankt voor je bericht! We nemen zo spoedig mogelijk contact met je op.');
     }
 }
