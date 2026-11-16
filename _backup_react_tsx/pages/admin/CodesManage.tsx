@@ -3,7 +3,16 @@ import { useApp } from '@/context/AppContext'
 
 export function AdminCodesManage() {
   const { codes, addCode, deleteCode, users, claims } = useApp()
-  const [newCode, setNewCode] = useState('')
+  function generateRandomCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+    let code = ''
+    for (let i = 0; i < 8; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    return code
+  }
+
+  const [newCode, setNewCode] = useState(() => generateRandomCode())
   const [assignTo, setAssignTo] = useState('')
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -16,15 +25,15 @@ export function AdminCodesManage() {
     setError('')
     setSuccess('')
     const upper = newCode.trim().toUpperCase()
-    if (!/^HB-\d{4}$/.test(upper)) {
-      setError('Code moet het formaat HB-XXXX hebben (bijv. HB-1234)')
+    if (!/^[A-Z0-9]{4,20}$/.test(upper)) {
+      setError('Code moet bestaan uit letters en cijfers (minimaal 4 tekens)')
       return
     }
     const ok = addCode(upper, assignTo || undefined)
     if (!ok) setError('Deze code bestaat al.')
     else {
       setSuccess(`Code ${upper} aangemaakt!`)
-      setNewCode('')
+      setNewCode(generateRandomCode())
       setAssignTo('')
     }
   }
@@ -73,13 +82,22 @@ export function AdminCodesManage() {
           <h2 className="font-display font-black text-xl uppercase text-ink mb-4">Code aanmaken</h2>
           <form onSubmit={handleAdd} className="bg-card border-2 border-ink p-6 space-y-4">
             <div>
-              <label className="block font-display font-bold text-xs uppercase tracking-widest text-ink mb-2">Code (formaat HB-XXXX)</label>
+              <div className="flex justify-between items-center mb-2">
+                <label className="block font-display font-bold text-xs uppercase tracking-widest text-ink">Code (willekeurige letters & cijfers)</label>
+                <button
+                  type="button"
+                  onClick={() => setNewCode(generateRandomCode())}
+                  className="text-xs font-display font-bold uppercase tracking-wider text-orange hover:underline"
+                >
+                  🎲 Nieuwe code
+                </button>
+              </div>
               <input
                 type="text"
                 value={newCode}
                 onChange={e => setNewCode(e.target.value.toUpperCase())}
-                placeholder="HB-XXXX"
-                maxLength={7}
+                placeholder="Bijv. 7K9X2M4B"
+                maxLength={20}
                 className="w-full border-2 border-ink/30 bg-white font-display font-black text-xl tracking-[0.3em] uppercase text-center py-3 px-4 focus:outline-none focus:border-ink transition-colors"
               />
             </div>

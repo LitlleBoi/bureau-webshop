@@ -159,12 +159,16 @@ class AdminController extends Controller
 
     public function storeCode(Request $request)
     {
+        if (!$request->filled('code')) {
+            $request->merge(['code' => Code::generateCode()]);
+        }
+
         $request->validate([
-            'code' => ['required', 'string', 'regex:/^HB-\d{4}$/', 'unique:codes,code'],
+            'code' => ['required', 'string', 'min:4', 'max:20', 'alpha_num', 'unique:codes,code'],
             'assigned_to' => ['nullable', 'exists:users,id'],
         ], [
             'code.required' => 'Vul een code in.',
-            'code.regex' => 'De code moet het formaat HB-XXXX hebben (bijv. HB-1234).',
+            'code.alpha_num' => 'De code mag alleen letters en cijfers bevatten.',
             'code.unique' => 'Deze code bestaat al.',
         ]);
 

@@ -87,7 +87,7 @@
                 <div class="usp-icon" style="background-color: var(--color-ink); color: #fff;">3</div>
                 <div>
                     <h3>Eenvoudig inwisselen</h3>
-                    <p>Kies je favoriet, voeg toe aan je tas en vul je HB-code in om direct te claimen.</p>
+                    <p>Kies je favoriet, voeg toe aan je tas en vul je unieke vouchercode in om direct te claimen.</p>
                 </div>
             </div>
         </div>
@@ -158,7 +158,7 @@
             <div class="step-card">
                 <span class="step-num" style="background-color: var(--color-ink); color: #fff;">03</span>
                 <h3>Code inwisselen</h3>
-                <p>Vul in de winkelwagen jouw unieke HB-code in. Na validatie is je bestelling direct kosteloos geplaatst!</p>
+                <p>Vul in de winkelwagen jouw unieke vouchercode in. Na validatie is je bestelling direct kosteloos geplaatst!</p>
             </div>
         </div>
     </div>

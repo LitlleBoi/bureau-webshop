@@ -36,17 +36,20 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="code" class="form-label">Code (Formaat HB-XXXX) *</label>
+                    <label for="code" class="form-label">Code (Willekeurige letters & cijfers) *</label>
                     <input type="text" 
                            id="code" 
                            name="code" 
-                           value="{{ old('code', 'HB-' . rand(1000, 9999)) }}" 
+                           value="{{ old('code', App\Models\Code::generateCode()) }}" 
                            required 
-                           maxlength="7" 
+                           maxlength="16" 
                            class="form-control" 
                            style="font-family: var(--font-display); font-weight: 900; font-size: 1.35rem; letter-spacing: 0.2em; text-transform: uppercase;">
+                    <button type="button" id="btnGenCode" class="btn btn-outline btn-sm" style="margin-top: 0.5rem; width: 100%;">
+                        🎲 Genereer nieuwe willekeurige code
+                    </button>
                     <span style="font-size: 0.8rem; color: var(--color-muted); display: block; margin-top: 0.35rem;">
-                        Moet uniek zijn en starten met HB- gevolgd door 4 cijfers.
+                        Willekeurige combinatie van letters en cijfers zonder HB-prefix.
                     </span>
                 </div>
 
@@ -155,4 +158,23 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('btnGenCode');
+    const input = document.getElementById('code');
+    if (btn && input) {
+        btn.addEventListener('click', function () {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            input.value = code;
+        });
+    }
+});
+</script>
 @endsection

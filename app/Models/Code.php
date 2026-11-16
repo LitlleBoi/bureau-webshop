@@ -38,4 +38,20 @@ class Code extends Model
     {
         return $this->hasOne(Claim::class);
     }
+
+    public static function generateCode(int $length = 8): string
+    {
+        $letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+        $digits = '23456789';
+        $allChars = $letters . $digits;
+
+        do {
+            $code = '';
+            for ($i = 0; $i < $length; $i++) {
+                $code .= $allChars[random_int(0, strlen($allChars) - 1)];
+            }
+        } while (!preg_match('/[A-Z]/', $code) || !preg_match('/[0-9]/', $code) || self::where('code', $code)->exists());
+
+        return $code;
+    }
 }

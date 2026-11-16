@@ -96,16 +96,17 @@
                                        id="codeInput" 
                                        name="code" 
                                        class="form-control code-input-lg" 
-                                       placeholder="HB-XXXX" 
-                                       maxlength="7" 
-                                       required
-                                       autofocus
+                                       placeholder="Bijv. 7K9X2M4B" 
+                                       maxlength="20" 
+                                       required 
+                                       autofocus 
+                                       style="text-transform: uppercase;" 
                                        value="{{ (auth()->user()->assignedCode && !auth()->user()->assignedCode->used) ? auth()->user()->assignedCode->code : old('code') }}">
                                 <span style="display: block; text-align: center; font-size: 0.85rem; color: var(--color-muted); margin-top: 0.5rem; font-family: var(--font-display); text-transform: uppercase;">
                                     @if(auth()->user()->assignedCode && !auth()->user()->assignedCode->used)
                                         ✓ Jouw persoonlijke code staat automatisch ingevuld!
                                     @else
-                                        Formaat: HB-XXXX (bijv. HB-1001) · Je kunt meerdere codes gebruiken!
+                                        Voer jouw unieke vouchercode in (letters & cijfers) · Je kunt meerdere codes gebruiken!
                                     @endif
                                 </span>
                             </div>

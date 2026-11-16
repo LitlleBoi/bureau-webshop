@@ -151,8 +151,8 @@ export function Cart() {
                   type="text"
                   value={code}
                   onChange={e => setCode(e.target.value.toUpperCase())}
-                  placeholder="HB-XXXX"
-                  maxLength={7}
+                  placeholder="Bijv. 7K9X2M4B"
+                  maxLength={20}
                   className="w-full border-2 border-ink bg-white font-display font-black text-2xl uppercase tracking-[0.3em] text-center py-4 px-4 focus:outline-none focus:border-brand mb-2 transition-colors"
                 />
                 {error && (
