@@ -92,10 +92,11 @@ class AuthController extends Controller
     public function account()
     {
         $user = Auth::user();
-        $code = $user->assignedCode;
+        $codes = $user->assignedCodes()->latest()->get();
+        $code = $user->assignedCode ?? $codes->first();
         $claims = $user->claims()->latest()->get();
 
-        return view('account.index', compact('user', 'code', 'claims'));
+        return view('account.index', compact('user', 'code', 'codes', 'claims'));
     }
 
     public function updateAccount(Request $request)

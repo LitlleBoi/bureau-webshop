@@ -105,9 +105,36 @@
         <div>
             <!-- Code Status Box -->
             <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; box-shadow: var(--shadow-card); margin-bottom: 2rem;">
-                <h3 style="font-size: 1.35rem; margin-bottom: 1rem; color: var(--color-ink);">Persoonlijke Code</h3>
+                <h3 style="font-size: 1.35rem; margin-bottom: 1rem; color: var(--color-ink);">Persoonlijke Code(s)</h3>
 
-                @if($code)
+                @if(isset($codes) && $codes->isNotEmpty())
+                    @foreach($codes as $c)
+                        <div style="margin-bottom: 1.25rem; padding-bottom: 1rem; {{ !$loop->last ? 'border-bottom: 1px solid var(--color-border-light);' : '' }}">
+                            <div style="background-color: var(--color-ink); color: var(--color-brand); font-family: var(--font-display); font-weight: 900; font-size: 1.4rem; text-align: center; padding: 0.75rem; letter-spacing: 0.08em; margin-bottom: 0.75rem;">
+                                {{ $c->code }}
+                            </div>
+
+                            @if($c->used)
+                                <div style="display: flex; align-items: center; gap: 0.5rem; color: #dc2626; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 0.85rem;">
+                                    <span style="width: 8px; height: 8px; background-color: #dc2626; border-radius: 9999px;"></span>
+                                    <span>Gebruikt op {{ $c->used_at ? $c->used_at->format('d-m-Y') : 'onlangs' }}</span>
+                                </div>
+                            @else
+                                <div style="display: flex; align-items: center; gap: 0.5rem; color: #15803d; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.75rem;">
+                                    <span style="width: 8px; height: 8px; background-color: #15803d; border-radius: 9999px;"></span>
+                                    <span>Beschikbaar om in te wisselen</span>
+                                </div>
+                                <a href="{{ route('products.index') }}" class="btn btn-brand btn-block btn-sm">Direct gebruiken →</a>
+                            @endif
+                        </div>
+                    @endforeach
+
+                    @if($codes->where('used', false)->isEmpty())
+                        <div style="padding: 0.75rem; background-color: #f8fafc; border: 1px solid #e2e8f0; font-size: 0.85rem; color: #555; text-align: center; margin-top: 0.5rem;">
+                            Heb je een extra code ontvangen? Voer deze direct in bij de winkelwagen om een nieuw item te claimen!
+                        </div>
+                    @endif
+                @elseif($code)
                     <div style="background-color: var(--color-ink); color: var(--color-brand); font-family: var(--font-display); font-weight: 900; font-size: 1.6rem; text-align: center; padding: 1rem; letter-spacing: 0.08em; margin-bottom: 1rem;">
                         {{ $code->code }}
                     </div>
@@ -117,6 +144,9 @@
                             <span style="width: 10px; height: 10px; background-color: #dc2626; border-radius: 9999px;"></span>
                             <span>Gebruikt op {{ $code->used_at ? $code->used_at->format('d-m-Y') : 'onlangs' }}</span>
                         </div>
+                        <div style="padding: 0.75rem; background-color: #f8fafc; border: 1px solid #e2e8f0; font-size: 0.85rem; color: #555; text-align: center; margin-top: 1rem;">
+                            Heb je nog een code ontvangen? Gebruik deze in de winkelwagen om nog een item te claimen!
+                        </div>
                     @else
                         <div style="display: flex; align-items: center; gap: 0.5rem; color: #15803d; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; margin-bottom: 1rem;">
                             <span style="width: 10px; height: 10px; background-color: #15803d; border-radius: 9999px;"></span>
@@ -124,17 +154,11 @@
                         </div>
                         <a href="{{ route('products.index') }}" class="btn btn-brand btn-block btn-sm">Direct gebruiken →</a>
                     @endif
-                @elseif($user->code_used)
-                    <div style="padding: 1rem; background-color: #fee2e2; border: 1px solid #f87171; text-align: center;">
-                        <p style="font-family: var(--font-body); font-weight: 700; text-transform: uppercase; color: #991b1b;">
-                            Je hebt jouw code al gebruikt
-                        </p>
-                    </div>
                 @else
                     <div style="padding: 1.25rem; background-color: #fef9c3; border: 1px solid #facc15; font-size: 0.9rem; line-height: 1.5;">
                         <p><strong>Nog geen code gekoppeld.</strong></p>
                         <p style="color: #666; margin-top: 0.25rem;">
-                            Neem contact op met HR van Het BUREAU om jouw persoonlijke vouchercode te ontvangen.
+                            Neem contact op met HR van Het BUREAU om jouw persoonlijke vouchercode te ontvangen. Heb je al een code ontvangen? Dan kun je die direct invoeren in de winkelwagen.
                         </p>
                     </div>
                 @endif

@@ -120,7 +120,7 @@
                     <span>⚡</span> <span>VOUCHERREGELING</span>
                 </h4>
                 <p style="font-size: 0.9rem; color: #555; line-height: 1.5;">
-                    Per medewerker mag er maximaal één artikel worden geclaimd. Zodra je jouw code in de winkelmand hebt ingevuld en bevestigd, wordt je selectie automatisch geregistreerd.
+                    Claim dit artikel gratis met een geldige vouchercode in je winkelwagen. Heb je meerdere codes? Dan kun je voor elke code een item claimen!
                 </p>
             </div>
         </div>

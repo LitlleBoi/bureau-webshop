@@ -53,10 +53,6 @@ class CartController extends Controller
 
         $user = Auth::user();
 
-        if ($user->code_used) {
-            return back()->with('error', 'Je hebt al eerder een product geclaimd met jouw medewerkerscode.');
-        }
-
         $cart = session()->get('cart_item');
         if (!$cart || !isset($cart['product_id'])) {
             return back()->with('error', 'Je winkelwagen is leeg. Kies eerst een product.');
@@ -106,10 +102,6 @@ class CartController extends Controller
             'used' => true,
             'used_by' => $user->id,
             'used_at' => now(),
-        ]);
-
-        $user->update([
-            'code_used' => true,
         ]);
 
         session()->forget('cart_item');

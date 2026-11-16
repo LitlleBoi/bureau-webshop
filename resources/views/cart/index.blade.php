@@ -85,51 +85,40 @@
                         </p>
                     </div>
                 @else
-                    @if(auth()->user()->code_used)
-                        <div class="cart-code-box" style="text-align: center; background-color: #fee2e2; border-color: #f87171;">
-                            <span style="font-size: 2.5rem; display: block; margin-bottom: 0.75rem;">⚠️</span>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: #991b1b;">Code reeds gebruikt</h3>
-                            <p style="color: #7f1d1d; font-size: 0.95rem; margin-bottom: 1.5rem;">
-                                Volgens onze administratie heb je al eerder een item geclaimd. De regeling staat één gratis item per medewerker toe.
-                            </p>
-                            <a href="{{ route('account') }}" class="btn btn-dark btn-block">Bekijk je bestelling in Mijn Account</a>
-                        </div>
-                    @else
-                        <div class="cart-code-box">
-                            <form action="{{ route('cart.claim') }}" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="codeInput" class="form-label" style="text-align: center; display: block; margin-bottom: 0.75rem;">
-                                        JOUW MEDEWERKERSCODE:
-                                    </label>
-                                    <input type="text" 
-                                           id="codeInput" 
-                                           name="code" 
-                                           class="form-control code-input-lg" 
-                                           placeholder="HB-XXXX" 
-                                           maxlength="7" 
-                                           required
-                                           autofocus
-                                           value="{{ auth()->user()->assignedCode ? auth()->user()->assignedCode->code : old('code') }}">
-                                    <span style="display: block; text-align: center; font-size: 0.85rem; color: var(--color-muted); margin-top: 0.5rem; font-family: var(--font-display); text-transform: uppercase;">
-                                        @if(auth()->user()->assignedCode)
-                                            ✓ Jouw persoonlijke code staat automatisch ingevuld!
-                                        @else
-                                            Formaat: HB-XXXX (bijv. HB-1001)
-                                        @endif
-                                    </span>
-                                </div>
-
-                                <button type="submit" class="btn btn-brand btn-block" style="padding: 1.15rem; font-size: 1.15rem;">
-                                    Code Inwisselen & Gratis Claimen →
-                                </button>
-                            </form>
-
-                            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border-light); font-size: 0.85rem; color: #666; line-height: 1.5;">
-                                <p><strong>Hoe kom ik aan een code?</strong> Elke medewerker ontvangt zijn persoonlijke code via HR of kan deze vinden in zijn <a href="{{ route('account') }}" style="color: var(--color-orange); text-decoration: underline;">accountoverzicht</a>.</p>
+                    <div class="cart-code-box">
+                        <form action="{{ route('cart.claim') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="codeInput" class="form-label" style="text-align: center; display: block; margin-bottom: 0.75rem;">
+                                    JOUW MEDEWERKERSCODE:
+                                </label>
+                                <input type="text" 
+                                       id="codeInput" 
+                                       name="code" 
+                                       class="form-control code-input-lg" 
+                                       placeholder="HB-XXXX" 
+                                       maxlength="7" 
+                                       required
+                                       autofocus
+                                       value="{{ (auth()->user()->assignedCode && !auth()->user()->assignedCode->used) ? auth()->user()->assignedCode->code : old('code') }}">
+                                <span style="display: block; text-align: center; font-size: 0.85rem; color: var(--color-muted); margin-top: 0.5rem; font-family: var(--font-display); text-transform: uppercase;">
+                                    @if(auth()->user()->assignedCode && !auth()->user()->assignedCode->used)
+                                        ✓ Jouw persoonlijke code staat automatisch ingevuld!
+                                    @else
+                                        Formaat: HB-XXXX (bijv. HB-1001) · Je kunt meerdere codes gebruiken!
+                                    @endif
+                                </span>
                             </div>
+
+                            <button type="submit" class="btn btn-brand btn-block" style="padding: 1.15rem; font-size: 1.15rem;">
+                                Code Inwisselen & Gratis Claimen →
+                            </button>
+                        </form>
+
+                        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border-light); font-size: 0.85rem; color: #666; line-height: 1.5;">
+                            <p><strong>Hoe kom ik aan een code?</strong> Medewerkers ontvangen hun code(s) via HR of kunnen deze vinden in hun <a href="{{ route('account') }}" style="color: var(--color-orange); text-decoration: underline;">accountoverzicht</a>. Heb je meerdere codes? Dan kun je per code een item claimen!</p>
                         </div>
-                    @endif
+                    </div>
                 @endguest
             </div>
         </div>

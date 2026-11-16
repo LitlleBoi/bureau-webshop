@@ -58,9 +58,14 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    public function assignedCodes(): HasMany
+    {
+        return $this->hasMany(Code::class, 'assigned_to');
+    }
+
     public function assignedCode(): HasOne
     {
-        return $this->hasOne(Code::class, 'assigned_to');
+        return $this->hasOne(Code::class, 'assigned_to')->where('used', false);
     }
 
     public function claims(): HasMany

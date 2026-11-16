@@ -139,7 +139,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
    */
   function useCode(code: string): { ok: boolean; error?: string } {
     if (!currentUser) return { ok: false, error: 'Je moet ingelogd zijn.' }
-    if (currentUser.codeUsed) return { ok: false, error: 'Je hebt al eerder een product geclaimd.' }
 
     const upper = code.trim().toUpperCase()
     const found = db.getCodeByValue(upper)
@@ -150,9 +149,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
     // Markeer code als gebruikt in database
     db.markCodeAsUsed(upper, currentUser.id)
-
-    // Markeer gebruiker als code-gebruikt in database
-    db.updateUser(currentUser.id, { codeUsed: true })
 
     // Sla claim op in database (als er een product in de winkelwagen zit)
     if (cartItem) {
