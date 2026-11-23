@@ -7,6 +7,7 @@ use App\Models\Code;
 use App\Models\Claim;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -70,48 +71,59 @@ class CartController extends Controller
         ]);
 
         $codeStr = strtoupper(trim($request->code));
-        $code = Code::where('code', $codeStr)->first();
 
-        if (!$code) {
-            return back()->with('error', 'Ongeldige code. Controleer je code en probeer opnieuw.');
+        // Transactie + lock: voorkomt dat een code vaker gebruikt wordt dan toegestaan
+        $result = DB::transaction(function () use ($codeStr, $user, $product, $cart) {
+            $code = Code::where('code', $codeStr)->lockForUpdate()->first();
+
+            if (!$code) {
+                return 'Ongeldige code. Controleer je code en probeer opnieuw.';
+            }
+
+            if ($code->used || $code->remainingUses() <= 0) {
+                return 'Deze code is al volledig gebruikt.';
+            }
+
+            if ($code->assigned_to && $code->assigned_to !== $user->id) {
+                return 'Deze persoonlijke code is niet aan jouw account gekoppeld.';
+            }
+
+            $claim = Claim::create([
+                'user_id' => $user->id,
+                'user_name' => $user->name,
+                'user_email' => $user->email,
+                'product_id' => $product->id,
+                'product_name' => $product->name_nl,
+                'code_id' => $code->id,
+                'code_value' => $code->code,
+                'color' => $cart['color'] ?? 'Standaard',
+                'size' => $cart['size'] ?? null,
+                'status' => 'claimed',
+            ]);
+
+            $usesCount = $code->uses_count + 1;
+            $code->update([
+                'uses_count' => $usesCount,
+                'used' => $usesCount >= $code->max_uses,
+                'used_by' => $user->id,
+                'used_at' => now(),
+            ]);
+
+            return $claim;
+        });
+
+        if (is_string($result)) {
+            return back()->with('error', $result);
         }
-
-        if ($code->used) {
-            return back()->with('error', 'Deze code is al gebruikt.');
-        }
-
-        if ($code->assigned_to && $code->assigned_to !== $user->id) {
-            return back()->with('error', 'Deze persoonlijke code is niet aan jouw account gekoppeld.');
-        }
-
-        // Transactie: claim aanmaken, code markeren, user markeren
-        $claim = Claim::create([
-            'user_id' => $user->id,
-            'user_name' => $user->name,
-            'user_email' => $user->email,
-            'product_id' => $product->id,
-            'product_name' => $product->name_nl,
-            'code_id' => $code->id,
-            'code_value' => $code->code,
-            'color' => $cart['color'] ?? 'Standaard',
-            'size' => $cart['size'] ?? null,
-            'status' => 'claimed',
-        ]);
-
-        $code->update([
-            'used' => true,
-            'used_by' => $user->id,
-            'used_at' => now(),
-        ]);
 
         session()->forget('cart_item');
 
-        return redirect()->route('cart.success', $claim->id);
+        return redirect()->route('cart.success', $result->id);
     }
 
     public function success($claimId)
     {
-        $claim = Claim::with(['product'])->findOrFail($claimId);
+        $claim = Claim::with(['product', 'code'])->findOrFail($claimId);
 
         // Alleen de eigenaar of admin mag deze bevestiging zien
         if (Auth::id() !== $claim->user_id && (!Auth::check() || !Auth::user()->isAdmin())) {

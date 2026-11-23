@@ -51,5 +51,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Codes beheren
     Route::get('/codes', [AdminController::class, 'codes'])->name('codes.index');
     Route::post('/codes', [AdminController::class, 'storeCode'])->name('codes.store');
+    Route::post('/codes-bulk', [AdminController::class, 'storeBulkCodes'])->name('codes.bulk');
     Route::post('/codes-verwijderen/{id}', [AdminController::class, 'deleteCode'])->name('codes.delete');
 });

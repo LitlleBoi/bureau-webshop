@@ -105,6 +105,9 @@
                                 <span style="display: block; text-align: center; font-size: 0.85rem; color: var(--color-muted); margin-top: 0.5rem; font-family: var(--font-display); text-transform: uppercase;">
                                     @if(auth()->user()->assignedCode && !auth()->user()->assignedCode->used)
                                         ✓ Jouw persoonlijke code staat automatisch ingevuld!
+                                        @if(auth()->user()->assignedCode->max_uses > 1)
+                                            <br>Nog {{ auth()->user()->assignedCode->remainingUses() }} van {{ auth()->user()->assignedCode->max_uses }} producten te claimen met deze code.
+                                        @endif
                                     @else
                                         Voer jouw unieke vouchercode in (letters & cijfers) · Je kunt meerdere codes gebruiken!
                                     @endif

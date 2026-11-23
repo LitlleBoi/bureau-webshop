@@ -139,7 +139,7 @@ class AdminController extends Controller
     public function codes(Request $request)
     {
         $filter = $request->get('filter', 'all');
-        $query = Code::with(['assignedUser', 'usedByUser', 'claim'])->latest();
+        $query = Code::with(['assignedUser', 'usedByUser', 'claims'])->latest();
 
         if ($filter === 'used') {
             $query->where('used', true);
@@ -165,29 +165,77 @@ class AdminController extends Controller
 
         $request->validate([
             'code' => ['required', 'string', 'min:4', 'max:20', 'alpha_num', 'unique:codes,code'],
+            'max_uses' => ['nullable', 'integer', 'min:1', 'max:100'],
             'assigned_to' => ['nullable', 'exists:users,id'],
         ], [
             'code.required' => 'Vul een code in.',
             'code.alpha_num' => 'De code mag alleen letters en cijfers bevatten.',
             'code.unique' => 'Deze code bestaat al.',
+            'max_uses.min' => 'Een code moet minimaal 1 product opleveren.',
+            'max_uses.max' => 'Een code kan maximaal 100 producten opleveren.',
         ]);
 
         $codeStr = strtoupper(trim($request->code));
+        $maxUses = (int) ($request->max_uses ?: 1);
 
         Code::create([
             'code' => $codeStr,
+            'max_uses' => $maxUses,
             'assigned_to' => $request->assigned_to ?: null,
             'used' => false,
         ]);
 
-        return back()->with('success', 'Code ' . $codeStr . ' succesvol aangemaakt!');
+        $suffix = $maxUses === 1 ? '1 product' : "{$maxUses} producten";
+        return back()->with('success', "Code {$codeStr} succesvol aangemaakt (geldig voor {$suffix})!");
+    }
+
+    public function storeBulkCodes(Request $request)
+    {
+        $validated = $request->validate([
+            'amount' => ['required', 'integer', 'min:1', 'max:100'],
+            'max_uses' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'assigned_to' => ['nullable', 'exists:users,id'],
+        ], [
+            'amount.required' => 'Geef aan hoeveel codes je wilt genereren.',
+            'amount.integer' => 'Aantal moet een geldig getal zijn.',
+            'amount.min' => 'Je moet minimaal 1 code genereren.',
+            'amount.max' => 'Je kunt maximaal 100 codes tegelijk genereren.',
+            'max_uses.min' => 'Een code moet minimaal 1 product opleveren.',
+            'max_uses.max' => 'Een code kan maximaal 100 producten opleveren.',
+        ]);
+
+        $amount = (int) $validated['amount'];
+        $maxUses = max(1, (int) ($validated['max_uses'] ?? 1));
+        $assignedTo = ($validated['assigned_to'] ?? null) ?: null;
+        $createdCodes = [];
+
+        for ($i = 0; $i < $amount; $i++) {
+            $codeStr = Code::generateCode();
+            $code = Code::create([
+                'code' => $codeStr,
+                'max_uses' => $maxUses,
+                'assigned_to' => $assignedTo,
+                'used' => false,
+            ]);
+            $createdCodes[] = $code->code;
+        }
+
+        $perCode = $maxUses === 1 ? '1 product' : "{$maxUses} producten";
+        $msg = $amount === 1
+            ? "1 nieuwe willekeurige code succesvol gegenereerd (geldig voor {$perCode})!"
+            : "{$amount} nieuwe willekeurige codes succesvol in één keer gegenereerd (elk geldig voor {$perCode})!";
+
+        return back()->with([
+            'success' => $msg,
+            'generated_codes' => $createdCodes,
+        ]);
     }
 
     public function deleteCode($id)
     {
         $code = Code::findOrFail($id);
-        if ($code->used) {
-            return back()->with('error', 'Een reeds gebruikte code kan niet worden verwijderd.');
+        if ($code->used || $code->uses_count > 0) {
+            return back()->with('error', 'Een (deels) gebruikte code kan niet worden verwijderd.');
         }
 
         $code->delete();

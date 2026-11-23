@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Code extends Model
@@ -13,6 +14,8 @@ class Code extends Model
 
     protected $fillable = [
         'code',
+        'max_uses',
+        'uses_count',
         'used',
         'assigned_to',
         'used_by',
@@ -21,6 +24,8 @@ class Code extends Model
 
     protected $casts = [
         'used' => 'boolean',
+        'max_uses' => 'integer',
+        'uses_count' => 'integer',
         'used_at' => 'datetime',
     ];
 
@@ -37,6 +42,17 @@ class Code extends Model
     public function claim(): HasOne
     {
         return $this->hasOne(Claim::class);
+    }
+
+    public function claims(): HasMany
+    {
+        return $this->hasMany(Claim::class);
+    }
+
+    /** Aantal producten dat nog met deze code geclaimd kan worden. */
+    public function remainingUses(): int
+    {
+        return max(0, (int) $this->max_uses - (int) $this->uses_count);
     }
 
     public static function generateCode(int $length = 8): string

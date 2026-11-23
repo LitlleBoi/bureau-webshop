@@ -24,6 +24,14 @@
             Gefeliciteerd! Je hebt jouw officiële merchandise item succesvol geclaimd. We gaan je bestelling klaarmaken voor verzending.
         </p>
 
+        @if($claim->code && $claim->code->remainingUses() > 0)
+            <div style="background-color: #ecfdf5; border: 1px solid #10b981; padding: 1rem; margin-bottom: 2rem; color: #065f46; font-weight: 700;">
+                Je kunt met code {{ $claim->code->code }} nog {{ $claim->code->remainingUses() }}
+                {{ $claim->code->remainingUses() === 1 ? 'product' : 'producten' }} claimen!
+                <a href="{{ route('products.index') }}" style="color: var(--color-orange); text-decoration: underline; margin-left: 0.25rem;">Kies nog een item →</a>
+            </div>
+        @endif
+
         <!-- Claim Summary Box -->
         <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; text-align: left; box-shadow: var(--shadow-card); margin-bottom: 2.5rem;">
             <div style="display: flex; gap: 1.5rem; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border-light);">

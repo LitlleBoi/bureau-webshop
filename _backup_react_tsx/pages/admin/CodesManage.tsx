@@ -12,6 +12,8 @@ export function AdminCodesManage() {
     return code
   }
 
+  const [mode, setMode] = useState<'bulk' | 'single'>('bulk')
+  const [bulkCount, setBulkCount] = useState(8)
   const [newCode, setNewCode] = useState(() => generateRandomCode())
   const [assignTo, setAssignTo] = useState('')
   const [error, setError] = useState('')
@@ -20,7 +22,7 @@ export function AdminCodesManage() {
 
   const employees = users.filter(u => u.role === 'employee')
 
-  function handleAdd(e: React.FormEvent) {
+  function handleSingleAdd(e: React.FormEvent) {
     e.preventDefault()
     setError('')
     setSuccess('')
@@ -36,6 +38,24 @@ export function AdminCodesManage() {
       setNewCode(generateRandomCode())
       setAssignTo('')
     }
+  }
+
+  function handleBulkAdd(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setSuccess('')
+    const count = Math.min(Math.max(bulkCount || 1, 1), 100)
+    let created = 0
+    for (let i = 0; i < count; i++) {
+      let candidate = generateRandomCode()
+      while (codes.some(c => c.code === candidate)) {
+        candidate = generateRandomCode()
+      }
+      if (addCode(candidate, assignTo || undefined)) {
+        created++
+      }
+    }
+    setSuccess(`${created} willekeurige codes succesvol aangemaakt!`)
   }
 
   const filtered = codes.filter(c => {
@@ -79,47 +99,116 @@ export function AdminCodesManage() {
       <div className="grid md:grid-cols-2 gap-8">
         {/* New code form */}
         <div>
-          <h2 className="font-display font-black text-xl uppercase text-ink mb-4">Code aanmaken</h2>
-          <form onSubmit={handleAdd} className="bg-card border-2 border-ink p-6 space-y-4">
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <label className="block font-display font-bold text-xs uppercase tracking-widest text-ink">Code (willekeurige letters & cijfers)</label>
-                <button
-                  type="button"
-                  onClick={() => setNewCode(generateRandomCode())}
-                  className="text-xs font-display font-bold uppercase tracking-wider text-orange hover:underline"
-                >
-                  🎲 Nieuwe code
-                </button>
-              </div>
-              <input
-                type="text"
-                value={newCode}
-                onChange={e => setNewCode(e.target.value.toUpperCase())}
-                placeholder="Bijv. 7K9X2M4B"
-                maxLength={20}
-                className="w-full border-2 border-ink/30 bg-white font-display font-black text-xl tracking-[0.3em] uppercase text-center py-3 px-4 focus:outline-none focus:border-ink transition-colors"
-              />
-            </div>
-            <div>
-              <label className="block font-display font-bold text-xs uppercase tracking-widest text-ink mb-2">Toewijzen aan medewerker (optioneel)</label>
-              <select
-                value={assignTo}
-                onChange={e => setAssignTo(e.target.value)}
-                className="w-full border-2 border-ink/30 bg-white text-sm px-4 py-3 focus:outline-none focus:border-ink transition-colors"
-              >
-                <option value="">— Niet toewijzen —</option>
-                {employees.map(u => (
-                  <option key={u.id} value={u.id}>{u.name} ({u.email})</option>
-                ))}
-              </select>
-            </div>
-            {error && <p className="font-display font-bold text-xs text-red-600 uppercase tracking-wide">⚠ {error}</p>}
-            {success && <p className="font-display font-bold text-xs text-green-600 uppercase tracking-wide">✓ {success}</p>}
-            <button type="submit" className="w-full bg-brand text-ink font-display font-black text-sm uppercase tracking-widest py-3 hover:bg-brand-dark transition-colors">
-              Code aanmaken →
+          <div className="flex border-b-2 border-ink mb-4">
+            <button
+              type="button"
+              onClick={() => setMode('bulk')}
+              className={`flex-1 py-2 font-display font-black text-sm uppercase tracking-wider border-b-4 transition-colors ${
+                mode === 'bulk' ? 'border-ink text-ink bg-card' : 'border-transparent text-muted hover:text-ink'
+              }`}
+            >
+              ⚡ Meerdere codes (Bulk)
             </button>
-          </form>
+            <button
+              type="button"
+              onClick={() => setMode('single')}
+              className={`flex-1 py-2 font-display font-black text-sm uppercase tracking-wider border-b-4 transition-colors ${
+                mode === 'single' ? 'border-ink text-ink bg-card' : 'border-transparent text-muted hover:text-ink'
+              }`}
+            >
+              Enkele code
+            </button>
+          </div>
+
+          {mode === 'bulk' ? (
+            <form onSubmit={handleBulkAdd} className="bg-card border-2 border-ink p-6 space-y-4">
+              <div>
+                <label className="block font-display font-bold text-xs uppercase tracking-widest text-ink mb-2">Aantal codes genereren</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={bulkCount}
+                  onChange={e => setBulkCount(parseInt(e.target.value) || 1)}
+                  className="w-full border-2 border-ink/30 bg-white font-display font-black text-xl text-center py-3 px-4 focus:outline-none focus:border-ink transition-colors"
+                />
+                <div className="flex gap-2 mt-2">
+                  <span className="text-xs text-muted font-display uppercase tracking-wider py-1">Snel:</span>
+                  {[5, 8, 10, 20, 50].map(n => (
+                    <button
+                      type="button"
+                      key={n}
+                      onClick={() => setBulkCount(n)}
+                      className={`text-xs px-2.5 py-1 border border-ink font-display font-bold ${
+                        bulkCount === n ? 'bg-brand text-ink' : 'bg-white hover:bg-gray-100'
+                      }`}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block font-display font-bold text-xs uppercase tracking-widest text-ink mb-2">Toewijzen aan medewerker (optioneel)</label>
+                <select
+                  value={assignTo}
+                  onChange={e => setAssignTo(e.target.value)}
+                  className="w-full border-2 border-ink/30 bg-white text-sm px-4 py-3 focus:outline-none focus:border-ink transition-colors"
+                >
+                  <option value="">— Niet toewijzen —</option>
+                  {employees.map(u => (
+                    <option key={u.id} value={u.id}>{u.name} ({u.email})</option>
+                  ))}
+                </select>
+              </div>
+              {error && <p className="font-display font-bold text-xs text-red-600 uppercase tracking-wide">⚠ {error}</p>}
+              {success && <p className="font-display font-bold text-xs text-green-600 uppercase tracking-wide">✓ {success}</p>}
+              <button type="submit" className="w-full bg-brand text-ink font-display font-black text-sm uppercase tracking-widest py-3 hover:bg-brand-dark transition-colors">
+                ⚡ Genereer {bulkCount || 1} codes in 1 keer →
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleSingleAdd} className="bg-card border-2 border-ink p-6 space-y-4">
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block font-display font-bold text-xs uppercase tracking-widest text-ink">Code (willekeurige letters & cijfers)</label>
+                  <button
+                    type="button"
+                    onClick={() => setNewCode(generateRandomCode())}
+                    className="text-xs font-display font-bold uppercase tracking-wider text-orange hover:underline"
+                  >
+                    🎲 Nieuwe code
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  value={newCode}
+                  onChange={e => setNewCode(e.target.value.toUpperCase())}
+                  placeholder="Bijv. 7K9X2M4B"
+                  maxLength={20}
+                  className="w-full border-2 border-ink/30 bg-white font-display font-black text-xl tracking-[0.3em] uppercase text-center py-3 px-4 focus:outline-none focus:border-ink transition-colors"
+                />
+              </div>
+              <div>
+                <label className="block font-display font-bold text-xs uppercase tracking-widest text-ink mb-2">Toewijzen aan medewerker (optioneel)</label>
+                <select
+                  value={assignTo}
+                  onChange={e => setAssignTo(e.target.value)}
+                  className="w-full border-2 border-ink/30 bg-white text-sm px-4 py-3 focus:outline-none focus:border-ink transition-colors"
+                >
+                  <option value="">— Niet toewijzen —</option>
+                  {employees.map(u => (
+                    <option key={u.id} value={u.id}>{u.name} ({u.email})</option>
+                  ))}
+                </select>
+              </div>
+              {error && <p className="font-display font-bold text-xs text-red-600 uppercase tracking-wide">⚠ {error}</p>}
+              {success && <p className="font-display font-bold text-xs text-green-600 uppercase tracking-wide">✓ {success}</p>}
+              <button type="submit" className="w-full bg-brand text-ink font-display font-black text-sm uppercase tracking-widest py-3 hover:bg-brand-dark transition-colors">
+                Enkele code aanmaken →
+              </button>
+            </form>
+          )}
         </div>
 
         {/* Codes list */}

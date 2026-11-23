@@ -113,6 +113,11 @@
                             <div style="background-color: var(--color-ink); color: var(--color-brand); font-family: var(--font-display); font-weight: 900; font-size: 1.4rem; text-align: center; padding: 0.75rem; letter-spacing: 0.08em; margin-bottom: 0.75rem;">
                                 {{ $c->code }}
                             </div>
+                            @if($c->max_uses > 1)
+                                <p style="font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; text-align: center;">
+                                    {{ $c->uses_count }} van {{ $c->max_uses }} producten geclaimd — nog <strong>{{ $c->remainingUses() }}</strong> over
+                                </p>
+                            @endif
 
                             @if($c->used)
                                 <div style="display: flex; align-items: center; gap: 0.5rem; color: #dc2626; font-family: var(--font-body); font-weight: 700; text-transform: uppercase; font-size: 0.85rem;">
