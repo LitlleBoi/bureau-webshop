@@ -692,6 +692,31 @@ h3, h4 {
   padding-top: 1rem;
 }
 
+/* Twee knoppen naast elkaar, even breed, passend in de productkaart */
+.product-card-actions {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.product-card-actions form {
+  margin: 0;
+  display: flex;
+}
+
+.product-card-actions .btn {
+  width: 100%;
+  min-width: 0;
+  padding: 0.65rem 0.4rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .product-price-free {
   font-family: var(--font-body);
   font-weight: 800;

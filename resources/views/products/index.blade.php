@@ -72,10 +72,10 @@
 
                         <p class="product-card-desc">{{ $p->description }}</p>
 
-                        <div class="product-card-footer" style="justify-content: flex-end;">
-                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+                        <div class="product-card-footer">
+                            <div class="product-card-actions" style="display: flex; flex-direction: row; flex-wrap: nowrap; gap: 0.5rem; width: 100%;">
                                 @if($p->available)
-                                    <form action="{{ route('cart.add') }}" method="POST" style="margin: 0;">
+                                    <form action="{{ route('cart.add') }}" method="POST" style="flex: 1 1 0; min-width: 0; margin: 0; display: flex;">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $p->id }}">
                                         <input type="hidden" name="color" value="{{ $p->colors[0] ?? 'Standaard' }}">
@@ -83,10 +83,10 @@
                                             <input type="hidden" name="size" value="{{ $p->sizes[0] }}">
                                         @endif
                                         <input type="hidden" name="stay" value="1">
-                                        <button type="submit" class="btn btn-brand btn-sm">+ In winkelwagen</button>
+                                        <button type="submit" class="btn btn-brand btn-sm" title="In winkelwagen" style="width: 100%;">+ Winkelwagen</button>
                                     </form>
                                 @endif
-                                <a href="{{ route('products.show', $p->id) }}" class="btn btn-dark btn-sm">Bekijk item →</a>
+                                <a href="{{ route('products.show', $p->id) }}" class="btn btn-dark btn-sm" style="flex: 1 1 0; min-width: 0;">Bekijk item →</a>
                             </div>
                         </div>
                     </div>
