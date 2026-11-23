@@ -120,8 +120,7 @@
                             <a href="{{ route('products.show', $p->id) }}">{{ $p->name_nl }}</a>
                         </h3>
                         <p class="product-card-desc">{{ $p->description }}</p>
-                        <div class="product-card-footer">
-                            <span class="product-price-free">Gratis met code</span>
+                        <div class="product-card-footer" style="justify-content: flex-end;">
                             <a href="{{ route('products.show', $p->id) }}" class="btn btn-dark btn-sm">Bekijk →</a>
                         </div>
                     </div>

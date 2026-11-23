@@ -61,8 +61,9 @@
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
                             <rect x="3.5" y="4" width="17" height="17" rx="3"/><path d="M8.5 8.5a3.5 3.5 0 007 0"/>
                         </svg>
-                        @if(session()->has('cart_item'))
-                            <span class="cart-badge">1</span>
+                        @php($cartCount = count(\App\Http\Controllers\CartController::items()))
+                        @if($cartCount > 0)
+                            <span class="cart-badge">{{ $cartCount }}</span>
                         @endif
                     </a>
 

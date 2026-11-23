@@ -41,12 +41,9 @@
                 {{ $product->name_nl }}
             </h1>
 
-            <div style="display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--color-border-light);">
-                <span style="font-family: var(--font-display); font-weight: 900; font-size: 2.25rem; color: var(--color-orange);">
-                    €0,00
-                </span>
+            <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--color-border-light);">
                 <span style="font-family: var(--font-body); font-weight: 700; font-size: 1.1rem; color: var(--color-muted); text-transform: uppercase;">
-                    (Gratis met medewerkerscode)
+                    Te claimen met een medewerkerscode
                 </span>
             </div>
 
@@ -146,8 +143,7 @@
                             <h3 class="product-card-title">
                                 <a href="{{ route('products.show', $rel->id) }}">{{ $rel->name_nl }}</a>
                             </h3>
-                            <div class="product-card-footer">
-                                <span class="product-price-free">GRATIS</span>
+                            <div class="product-card-footer" style="justify-content: flex-end;">
                                 <a href="{{ route('products.show', $rel->id) }}" class="btn btn-dark btn-sm">Bekijk →</a>
                             </div>
                         </div>

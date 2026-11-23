@@ -72,8 +72,7 @@
 
                         <p class="product-card-desc">{{ $p->description }}</p>
 
-                        <div class="product-card-footer">
-                            <span class="product-price-free">GRATIS</span>
+                        <div class="product-card-footer" style="justify-content: flex-end;">
                             <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
                                 @if($p->available)
                                     <form action="{{ route('cart.add') }}" method="POST" style="margin: 0;">

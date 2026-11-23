@@ -21,7 +21,11 @@
         </h1>
 
         <p style="font-size: 1.25rem; color: #444; margin-bottom: 2.5rem; line-height: 1.6;">
-            Gefeliciteerd! Je hebt jouw officiële merchandise item succesvol geclaimd. We gaan je bestelling klaarmaken voor verzending.
+            @if($claims->count() > 1)
+                Gefeliciteerd! Je hebt {{ $claims->count() }} officiële merchandise items succesvol geclaimd. We gaan je bestelling klaarmaken voor verzending.
+            @else
+                Gefeliciteerd! Je hebt jouw officiële merchandise item succesvol geclaimd. We gaan je bestelling klaarmaken voor verzending.
+            @endif
         </p>
 
         @if($claim->code && $claim->code->remainingUses() > 0)
@@ -34,22 +38,21 @@
 
         <!-- Claim Summary Box -->
         <div style="background-color: var(--color-card); border: 1px solid var(--color-border); padding: 2rem; text-align: left; box-shadow: var(--shadow-card); margin-bottom: 2.5rem;">
-            <div style="display: flex; gap: 1.5rem; align-items: center; padding-bottom: 1.5rem; border-bottom: 1px solid var(--color-border-light);">
-                @if($claim->product)
-                    <img src="{{ $claim->product->image }}" alt="{{ $claim->product_name }}" style="width: 90px; height: 90px; object-fit: cover; border: 1px solid var(--color-border); flex-shrink: 0;">
+            @foreach($claims as $cl)
+            <div style="display: flex; gap: 1.5rem; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--color-border-light);">
+                @if($cl->product)
+                    <img src="{{ $cl->product->image }}" alt="{{ $cl->product_name }}" style="width: 90px; height: 90px; object-fit: cover; border: 1px solid var(--color-border); flex-shrink: 0;">
                 @endif
                 <div>
                     <span class="product-card-category">Geclaimd Item</span>
-                    <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">{{ $claim->product_name }}</h3>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 0.25rem;">{{ $cl->product_name }}</h3>
                     <p style="font-family: var(--font-body); font-weight: 700; color: #555; text-transform: uppercase; font-size: 0.9rem;">
-                        Kleur: {{ $claim->color }}
-                        @if($claim->size) · Maat: {{ $claim->size }} @endif
+                        Kleur: {{ $cl->color }}
+                        @if($cl->size) · Maat: {{ $cl->size }} @endif
                     </p>
-                    <span style="font-family: var(--font-display); font-weight: 900; color: var(--color-orange); font-size: 1.1rem; text-transform: uppercase;">
-                        €0,00 — Volledig Vergoed
-                    </span>
                 </div>
             </div>
+            @endforeach
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding-top: 1.5rem; font-size: 0.95rem;">
                 <div>
