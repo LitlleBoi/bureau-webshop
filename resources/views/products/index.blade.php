@@ -74,7 +74,21 @@
 
                         <div class="product-card-footer">
                             <span class="product-price-free">GRATIS</span>
-                            <a href="{{ route('products.show', $p->id) }}" class="btn btn-dark btn-sm">Bekijk item →</a>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end;">
+                                @if($p->available)
+                                    <form action="{{ route('cart.add') }}" method="POST" style="margin: 0;">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $p->id }}">
+                                        <input type="hidden" name="color" value="{{ $p->colors[0] ?? 'Standaard' }}">
+                                        @if(!empty($p->sizes))
+                                            <input type="hidden" name="size" value="{{ $p->sizes[0] }}">
+                                        @endif
+                                        <input type="hidden" name="stay" value="1">
+                                        <button type="submit" class="btn btn-brand btn-sm">+ In winkelwagen</button>
+                                    </form>
+                                @endif
+                                <a href="{{ route('products.show', $p->id) }}" class="btn btn-dark btn-sm">Bekijk item →</a>
+                            </div>
                         </div>
                     </div>
                 </div>

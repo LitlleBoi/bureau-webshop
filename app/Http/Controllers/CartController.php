@@ -37,6 +37,12 @@ class CartController extends Controller
             'size' => $validated['size'] ?? null,
         ]);
 
+        // Vanuit het productoverzicht: op dezelfde pagina blijven
+        if ($request->boolean('stay')) {
+            $product = Product::find($validated['product_id']);
+            return back()->with('success', ($product->name_nl ?? 'Product') . ' is toegevoegd aan je winkelwagen!');
+        }
+
         return redirect()->route('cart.index')->with('success', 'Product toegevoegd aan je winkelwagen!');
     }
 
